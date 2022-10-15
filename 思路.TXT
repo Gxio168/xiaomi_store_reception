@@ -1,0 +1,187 @@
+大致思路
+一、 用户注册 （完成）
+    1、 前端验证密码和确认密码的正确性 （完成）
+    2、必须勾选上才能向后端传递数据	（完成）
+    3、由后端提供验证码和用户的注册	（完成）
+    4、注册成功之后，后台返回一条 token，并跳转到此前要去的页面 （完成）
+    5、获取到的 token 保存在本地，通过路由守卫发送请求，获取用户信息 （完成）
+二、用户登录 （完成）
+    1、前端验证一此账号密码，后端验证一次账号密码 （完成）
+    2、步骤同 一 中的 5	（完成）
+三、用户退出登录	（完成）
+四、完成路由守卫	（完成）
+    1、判断用户是否已经登录，控制路由的跳转 （完成）
+五、向后台插入图片信息  （完成）
+    1、后台给图片设置静态路径  （完成）
+    2、向数据库中导入图片的静态地址 （完成）
+六、针对首页和商品页返回不同的数据 （完成）
+    1、首页：轮播图数据，所有商品的信息（需做后续处理），购物车信息 （完成）
+    2、商品页：所有商品的信息（需做处理），各商品类按照商品 ID 返回数据 （完成）
+七、完成用户购物车 和 喜欢页面 （完成）
+七、实现订单系统 （完成）
+八、将数据渲染到页面上
+    1、首页商品和商品页面 （完成）
+    2、商品细节页面 （完成）
+    3、模糊查询
+    4、购物车  （完成）
+    5、订单提交界面
+    6、订单界面
+    7、我的喜欢
+
+
+api:
+(完成)1、获取购物车 /auth/getShopCart  Method: Get
+  返回数据: [
+    {
+      id: number,
+      num: number,
+      product: {
+        id: number,
+        name: string,
+        selling_price: number,
+        product_picture: [
+          {
+            pic_url: string
+          }
+        ]
+      }
+    }
+  ]
+
+(完成)2、向购物车添加商品 /auth/addToShopCart Method: Post  Body: { id（商品ID）: number }
+
+(完成)3、从购物车移除商品 /auth/removeFromShopCart Method: Post  Body: { id（购物车商品ID）: number }
+
+(完成)4、修改购物车商品数量 /auth/changeShopNum Method: Post   Body: { id（购物车商品ID）: number, num: number }
+
+(完成)5、向订单中添加数据 /auth/addToOrder method: Post Body: null
+
+(完成)6、获取订单信息  /auth/getOrder method: Get
+  返回数据: [
+    {
+      id: number,
+      order_id: binInt,
+      user_id: number,
+      product_id: number,
+      product_num: number,
+      product_price: number,
+      order_time: Time,
+      product: {
+        name: string,
+        product_picture: [
+          pic_url: string
+        ]
+      }
+    }
+  ]
+
+(完成)7、加入我的收藏 /auth/addToCollect method: Post Body: { id(商品ID): number }
+
+(完成)8、获取我的收藏 /auth/getCollect method: get
+  返回的数据:[
+    {
+      id: number,
+      user_id: number,
+      product_id: number,
+      is_delete: number,
+      product: {
+        id: number,
+        name: string,
+        title: string,
+        price: number,
+        selling_price: number,
+        product_picture: [
+          {
+            pic_url: string
+          }
+        ]
+      }
+    }
+  ]
+
+(完成)9、移除出我的收藏 /auth/removeFromCollect method: Post Body: { id(收藏中的ID): number }
+
+(完成)10、查询商品是否在我的收藏中 /auth/checkCollect method: Post Body: { id(商品ID): number }
+(完成)11、返回首页商品 /category method: Get
+  注意：每种类型最多返回八条
+  返回数据: [
+    {
+      id: number,
+      name: string,
+      product: [
+        {
+          id: number,
+          name: nunber,
+          title: string,
+          price: number,
+          selling_price: number,
+          product_picture: [
+            id: number,
+            product_id: number,
+            pic_url: string
+          ]
+        }
+      ]
+    }
+  ]
+
+(完成)12、返回单一类型的商品 /category/:id/:page  method: Get
+  注意: id 为 0 时，表示商品页的所有数据，page 从 1 开始，一页最多 15 条数据
+  返回数据: {
+    id: number,
+    name: number,
+    product: [
+      {
+        id: number,
+        name: string,
+        title: string,
+        price: number,
+        selling_price: number,
+        product_picture: [
+          {
+            id: number,
+            product_id: number,
+            pic_url: string
+          }
+        ]
+      }
+    ],
+    total: number
+
+  }
+
+(完成)13、返回单一商品信息 /category/detail?id=xxx method: Get
+  返回数据: {
+    id: number,
+    name: string,
+    title: string,
+    introduce: string,
+    price: number,
+    selling_price: number,
+    sales: number,
+    category_id: number,
+    product_picture:  [
+      {
+        id: number,
+        product_id: number,
+        pic_url: string
+      }
+    ]
+  }
+
+(完成)13、模糊查询 /category/page method: Post Body: { key(要查询的关键字): string }, Params: { page: number }
+  返回数据: {
+    products: {
+      id: number,
+      name: string,
+      title: string,
+      price: number,
+      selling_price: number,
+      product_picture: [
+        pic_url: string
+      ]
+    },
+    total: number
+  }
+
+
