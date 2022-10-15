@@ -1,6 +1,6 @@
 # xiaomiMall
 
-This template should help get you started developing with Vue 3 in Vite.
+本人根据小米商城首页写的小米商城前台，主要利用了 Vue3 + Vue-router + Pinia + less + ts + elemenetPlus实现，包含了主页、登陆注册界面、全部商品分类界面、商品细节界面、购物车界面、确认订单界面、订单界面、收藏界面
 
 ## Recommended IDE Setup
 
